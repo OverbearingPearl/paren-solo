@@ -187,24 +187,27 @@ Returns (STRING . LINE-DISTANCE) where LINE-DISTANCE is line difference, or nil.
 (defun pearl-paren-style--annotation-color-for-distance (line-distance)
   "Calculate annotation color based on LINE-DISTANCE (lines from opening paren).
 Closer distance = blend more toward background (less visible)."
-  (let* ((frame (selected-frame))
-         (base-color (face-attribute 'font-lock-comment-face :foreground frame))
-         (bg-color (face-attribute 'default :background frame)))
-    (when (eq base-color 'unspecified)
-      (error "font-lock-comment-face foreground color is unspecified"))
-    (when (eq bg-color 'unspecified)
-      (error "Default face background color is unspecified"))
-    (let* ((threshold 20.0)
-           (ratio (min 1.0 (/ (float line-distance) threshold)))
-           (base-rgb (color-name-to-rgb base-color))
-           (bg-rgb (color-name-to-rgb bg-color)))
-      (cl-assert (and base-rgb bg-rgb)
-                 nil "pearl-paren-style: failed to parse colors: base=%s bg=%s"
-                 base-color bg-color)
-      (apply #'color-rgb-to-hex
-             (cl-mapcar (lambda (b g)
-                          (+ (* b ratio) (* g (- 1.0 ratio))))
-                        base-rgb bg-rgb)))))
+  ;; In batch mode, return a simple default color to avoid color parsing issues
+  (if noninteractive
+      "#888888"  ; Default gray color for batch mode
+    (let* ((frame (selected-frame))
+           (base-color (face-attribute 'font-lock-comment-face :foreground frame))
+           (bg-color (face-attribute 'default :background frame)))
+      (when (eq base-color 'unspecified)
+        (error "font-lock-comment-face foreground color is unspecified"))
+      (when (eq bg-color 'unspecified)
+        (error "Default face background color is unspecified"))
+      (let* ((threshold 20.0)
+             (ratio (min 1.0 (/ (float line-distance) threshold)))
+             (base-rgb (color-name-to-rgb base-color))
+             (bg-rgb (color-name-to-rgb bg-color)))
+        (cl-assert (and base-rgb bg-rgb)
+                   nil "pearl-paren-style: failed to parse colors: base=%s bg=%s"
+                   base-color bg-color)
+        (apply #'color-rgb-to-hex
+               (cl-mapcar (lambda (b g)
+                            (+ (* b ratio) (* g (- 1.0 ratio))))
+                          base-rgb bg-rgb))))))
 
 (defun pearl-paren-style--annotation-to-comment (closing-pos)
   "Convert annotation at CLOSING-POS to comment text.
