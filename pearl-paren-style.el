@@ -6,7 +6,6 @@
 ;; Version: 0.1.0
 ;; Package-Requires: ((emacs "25.1"))
 ;; Keywords: lisp, tools, convenience, parentheses, formatting
-;; License: GPL-3.0-or-later
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
@@ -914,7 +913,7 @@ This restores interactive annotations from permanent comments."
     ;; Reload source files (force load .el, ignore .elc)
     (load (expand-file-name "pearl-paren-style" dir) nil t)
     ;; Load test files
-    (load (expand-file-name "pearl-paren-style-spec" dir) nil t))
+    (load (expand-file-name "pearl-paren-style-test" dir) nil t))
 
   ;; Use batch-compatible function to ensure output is visible in terminal
   (if noninteractive

@@ -1,9 +1,8 @@
-;;; pearl-paren-style-spec.el --- Tests for pearl-paren-style  -*- lexical-binding: t; -*-
+;;; pearl-paren-style-test.el --- Tests for pearl-paren-style  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2026 OverbearingPearl
 ;; Author: OverbearingPearl <OverbearingPearl@outlook.com>
 ;; URL: https://github.com/OverbearingPearl/pearl-paren-style
-;; License: GPL-3.0-or-later
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
@@ -17,7 +16,7 @@
 
 ;;;; Detection tests
 
-(ert-deftest pearl-paren-style-spec-detect-compact ()
+(ert-deftest pearl-paren-style-detect-compact-test ()
   "Detect compact style: closing parenthesis on same line as content."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -29,7 +28,7 @@
                             original detected expected-style))
           (should (eq detected expected-style)))))))
 
-(ert-deftest pearl-paren-style-spec-detect-dangling ()
+(ert-deftest pearl-paren-style-detect-dangling-test ()
   "Detect dangling style: closing parenthesis on its own line."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -41,7 +40,7 @@
                             original detected expected-style))
           (should (eq detected expected-style)))))))
 
-(ert-deftest pearl-paren-style-spec-detect-multiple-dangling ()
+(ert-deftest pearl-paren-style-detect-multiple-dangling-test ()
   "Detect dangling style with multiple dangling parentheses."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -53,7 +52,7 @@
                             original detected expected-style))
           (should (eq detected expected-style)))))))
 
-(ert-deftest pearl-paren-style-spec-detect-single-line-multiple-forms ()
+(ert-deftest pearl-paren-style-detect-single-line-multiple-forms-test ()
   "Detect compact style for single-line multiple forms."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -65,7 +64,7 @@
                             original detected expected-style))
           (should (eq detected expected-style)))))))
 
-(ert-deftest pearl-paren-style-spec-detect-ignores-multiline-comment ()
+(ert-deftest pearl-paren-style-detect-ignores-multiline-comment-test ()
   "Detection ignores parentheses inside multi-line comments."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -77,7 +76,7 @@
                             original detected expected-style))
           (should (eq detected expected-style)))))))
 
-(ert-deftest pearl-paren-style-spec-detect-empty-buffer ()
+(ert-deftest pearl-paren-style-detect-empty-buffer-test ()
   "Detection in empty buffer returns nil."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -89,7 +88,7 @@
                             original detected expected-style))
           (should (eq detected expected-style)))))))
 
-(ert-deftest pearl-paren-style-spec-detect-comments-only ()
+(ert-deftest pearl-paren-style-detect-comments-only-test ()
   "Detection in comment-only buffer returns nil."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -101,7 +100,7 @@
                             original detected expected-style))
           (should (eq detected expected-style)))))))
 
-(ert-deftest pearl-paren-style-spec-detect-mixed-style ()
+(ert-deftest pearl-paren-style-detect-mixed-style-test ()
   "Detection prefers dangling style when any dangling parenthesis exists."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -113,7 +112,7 @@
                             original detected expected-style))
           (should (eq detected expected-style)))))))
 
-(ert-deftest pearl-paren-style-spec-detect-chooses-dangling-when-equal ()
+(ert-deftest pearl-paren-style-detect-chooses-dangling-when-equal-test ()
   "Detection chooses dangling style when compact/dangling counts are equal."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -125,7 +124,7 @@
           ;; According to code logic: (> dangling 0) 'dangling when equal
           (should (eq detected 'dangling)))))))
 
-(ert-deftest pearl-paren-style-spec-detect-mixed-with-many-compact ()
+(ert-deftest pearl-paren-style-detect-mixed-with-many-compact-test ()
   "Detection should return 'dangling when any dangling exists, even with many compact."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -140,7 +139,7 @@
           ;; New logic: return 'dangling if any dangling exists
           (should (eq detected 'dangling)))))))
 
-(ert-deftest pearl-paren-style-spec-detect-priority ()
+(ert-deftest pearl-paren-style-detect-priority-test ()
   "Test detection priority: dangling vs compact counts."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -172,11 +171,11 @@
         ;; When equal, new logic (> dangling 0) returns 'dangling
         (should (eq detected 'dangling))))))
 
-(ert-deftest pearl-paren-style-spec-toggle-with-mixed-content ()
+(ert-deftest pearl-paren-style-toggle-with-mixed-content-test ()
   "Toggle should work correctly even with mixed dangling/compact content."
   (with-temp-buffer
     (emacs-lisp-mode)
-    ;; Create content similar to pearl-paren-style-spec.el file structure
+    ;; Create content similar to pearl-paren-style-test.el file structure
     ;; 1. A dangling-style expression
     (insert "(foo\n  (bar)\n)\n")
     ;; 2. Many compact-style test code (simulating test file)
@@ -197,7 +196,7 @@
 
 ;;;; Toggle tests
 
-(ert-deftest pearl-paren-style-spec-toggle-compact-to-dangling ()
+(ert-deftest pearl-paren-style-toggle-compact-to-dangling-test ()
   "Toggle conversion from compact to dangling style."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -213,7 +212,7 @@
                               before before-detect result detected expected-style))
             (should (eq detected expected-style))))))))
 
-(ert-deftest pearl-paren-style-spec-toggle-dangling-to-compact ()
+(ert-deftest pearl-paren-style-toggle-dangling-to-compact-test ()
   "Toggle conversion from dangling to compact style."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -229,7 +228,7 @@
                               before before-detect result detected expected-style))
             (should (eq detected expected-style))))))))
 
-(ert-deftest pearl-paren-style-spec-toggle-roundtrip ()
+(ert-deftest pearl-paren-style-toggle-roundtrip-test ()
   "Double toggle returns to original compact style."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -251,7 +250,7 @@
                                 result detected expected-style))
               (should (eq detected expected-style)))))))))
 
-(ert-deftest pearl-paren-style-spec-toggle-no-extra-blank-lines ()
+(ert-deftest pearl-paren-style-toggle-no-extra-blank-lines-test ()
   "Toggle does not create extra blank lines (dangling to compact)."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -273,7 +272,7 @@
           (forward-line -1)
           (should-not (looking-at "^\\s-*$")))))))
 
-(ert-deftest pearl-paren-style-spec-toggle-preserves-comment-spacing ()
+(ert-deftest pearl-paren-style-toggle-preserves-comment-spacing-test ()
   "Toggle preserves spacing before trailing comments."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -289,7 +288,7 @@
 
 ;;;; Check balanced tests
 
-(ert-deftest pearl-paren-style-spec-check-balanced-basic ()
+(ert-deftest pearl-paren-style-check-balanced-basic-test ()
   "Check balanced parentheses in basic code."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -300,7 +299,7 @@
                             code result))
           (should result))))))
 
-(ert-deftest pearl-paren-style-spec-check-unbalanced-basic ()
+(ert-deftest pearl-paren-style-check-unbalanced-basic-test ()
   "Check unbalanced parentheses in basic code."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -311,7 +310,7 @@
                             code result))
           (should-not result))))))
 
-(ert-deftest pearl-paren-style-spec-check-balanced-region ()
+(ert-deftest pearl-paren-style-check-balanced-region-test ()
   "Check balanced parentheses within region."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -324,7 +323,7 @@
           (should result-first)
           (should-not result-second))))))
 
-(ert-deftest pearl-paren-style-spec-check-balanced-char-literals ()
+(ert-deftest pearl-paren-style-check-balanced-char-literals-test ()
   "Character literals do not affect parenthesis balance."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -335,7 +334,7 @@
                             code result))
           (should result))))))
 
-(ert-deftest pearl-paren-style-spec-check-balanced-string-parens ()
+(ert-deftest pearl-paren-style-check-balanced-string-parens-test ()
   "Parentheses inside strings are ignored for balance checking."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -346,7 +345,7 @@
                             code result))
           (should result))))))
 
-(ert-deftest pearl-paren-style-spec-check-balanced-comment-parens ()
+(ert-deftest pearl-paren-style-check-balanced-comment-parens-test ()
   "Parentheses inside comments are ignored for balance checking."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -357,7 +356,7 @@
                             code result))
           (should result))))))
 
-(ert-deftest pearl-paren-style-spec-check-balanced-multiline-comment ()
+(ert-deftest pearl-paren-style-check-balanced-multiline-comment-test ()
   "Multi-line comments are ignored for balance checking."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -368,7 +367,7 @@
                             code result))
           (should result))))))
 
-(ert-deftest pearl-paren-style-spec-check-balanced-source-file ()
+(ert-deftest pearl-paren-style-check-balanced-source-file-test ()
   "Check that actual source file has balanced parentheses."
   (let ((source-file (expand-file-name "pearl-paren-style.el"
                                        (file-name-directory
@@ -380,7 +379,7 @@
         (insert-file-contents source-file)
         (should (pearl-paren-style--check-balanced-p))))))
 
-(ert-deftest pearl-paren-style-spec-check-balanced-whole-buffer ()
+(ert-deftest pearl-paren-style-check-balanced-whole-buffer-test ()
   "Check balanced parentheses in whole buffer (nil arguments)."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -391,7 +390,7 @@
                             code result))
           (should result))))))
 
-(ert-deftest pearl-paren-style-spec-check-unbalanced-region ()
+(ert-deftest pearl-paren-style-check-unbalanced-region-test ()
   "Check unbalanced parentheses within region."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -402,7 +401,7 @@
                             code result))
           (should-not result))))))
 
-(ert-deftest pearl-paren-style-spec-check-empty-region ()
+(ert-deftest pearl-paren-style-check-empty-region-test ()
   "Check balanced parentheses in empty region (edge case)."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -415,7 +414,7 @@
 
 ;;;; Region tests
 
-(ert-deftest pearl-paren-style-spec-region-to-compact ()
+(ert-deftest pearl-paren-style-region-to-compact-test ()
   "Convert selected region to compact style."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -437,7 +436,7 @@
             (should (string-match-p "  (let ((x 1))\n    (foo))" result))
             (should (string-match-p ")" result))))))))
 
-(ert-deftest pearl-paren-style-spec-region-to-dangling ()
+(ert-deftest pearl-paren-style-region-to-dangling-test ()
   "Convert selected region to dangling style."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -455,7 +454,7 @@
                               original region-content result))
             (should (string-match-p "(let ((x 1))\n  (foo)\n  (bar)\n)" result))))))))
 
-(ert-deftest pearl-paren-style-spec-region-toggle ()
+(ert-deftest pearl-paren-style-region-toggle-test ()
   "Toggle style within selected region."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -476,7 +475,7 @@
             ;; Should have converted dangling to compact
             (should (string-match-p "  (let ((x 1))\n    (foo))" result))))))))
 
-(ert-deftest pearl-paren-style-spec-region-convert ()
+(ert-deftest pearl-paren-style-region-convert-test ()
   "Convert region with explicit style selection."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -501,7 +500,7 @@
                                 before region-content target-style result))
               (should (string-match-p "  (let ((x 1))\n    (foo))" result)))))))))
 
-(ert-deftest pearl-paren-style-spec-region-precise-boundaries ()
+(ert-deftest pearl-paren-style-region-precise-boundaries-test ()
   "Region conversion with precise boundary conditions."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -552,7 +551,7 @@
 
 ;;;; Compact conversion tests
 
-(ert-deftest pearl-paren-style-spec-convert-to-compact-with-comment-line ()
+(ert-deftest pearl-paren-style-convert-to-compact-with-comment-line-test ()
   "Compact conversion does not merge ) into comment line."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -566,7 +565,7 @@
           (should (string-match-p ";; comment" result))
           (should (string= result expected)))))))
 
-(ert-deftest pearl-paren-style-spec-convert-to-compact-multi-level ()
+(ert-deftest pearl-paren-style-convert-to-compact-multi-level-test ()
   "Compact conversion for multi-level dangling parentheses with comment."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -598,7 +597,7 @@
                 (should (> count 1)))))
           (should (string= result expected)))))))
 
-(ert-deftest pearl-paren-style-spec-convert-to-compact-with-comment ()
+(ert-deftest pearl-paren-style-convert-to-compact-with-comment-test ()
   "Compact conversion handles ) in comment correctly."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -612,7 +611,7 @@
           (search-backward ";")
           (should (looking-at "; note: returns ')'")))))))
 
-(ert-deftest pearl-paren-style-spec-convert-to-compact-consecutive-comments ()
+(ert-deftest pearl-paren-style-convert-to-compact-consecutive-comments-test ()
   "Compact conversion does not merge ) into consecutive comment lines."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -629,7 +628,7 @@
           ;; Should not merge ) with comment lines
           (should (string= result expected)))))))
 
-(ert-deftest pearl-paren-style-spec-convert-to-compact-comment-between-code ()
+(ert-deftest pearl-paren-style-convert-to-compact-comment-between-code-test ()
   "Compact conversion handles mixed code/comment lines before )."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -644,7 +643,7 @@
           ;; Should NOT merge ) with (bar) line because there's a comment line between them
           (should (string= result expected)))))))
 
-(ert-deftest pearl-paren-style-spec-convert-to-compact-merges-paren-with-comment ()
+(ert-deftest pearl-paren-style-convert-to-compact-merges-paren-with-comment-test ()
   "Compact conversion merges ) line with trailing comment."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -657,7 +656,7 @@
                             original result expected))
           (should (string= result expected)))))))
 
-(ert-deftest pearl-paren-style-spec-convert-to-compact-some-commented ()
+(ert-deftest pearl-paren-style-convert-to-compact-some-commented-test ()
   "Compact conversion with mixed commented/uncommented ) lines."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -670,7 +669,7 @@
                             original result expected))
           (should (string= result expected)))))))
 
-(ert-deftest pearl-paren-style-spec-convert-to-compact-deep-nested ()
+(ert-deftest pearl-paren-style-convert-to-compact-deep-nested-test ()
   "Compact conversion for deep nested parentheses with comment."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -683,7 +682,7 @@
                             original result expected))
           (should (string= result expected)))))))
 
-(ert-deftest pearl-paren-style-spec-convert-to-compact-deep-nesting ()
+(ert-deftest pearl-paren-style-convert-to-compact-deep-nesting-test ()
   "Compact conversion for very deep nesting."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -696,7 +695,7 @@
           (skip-chars-backward " \t\n")
           (should (eq (char-before) ?\))))))))
 
-(ert-deftest pearl-paren-style-spec-convert-to-compact-deep-nesting-with-comments ()
+(ert-deftest pearl-paren-style-convert-to-compact-deep-nesting-with-comments-test ()
   "Compact conversion for deep nesting with comments at each level."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -714,7 +713,7 @@
           (should (string-match-p "; end a" result))
           (should (string= result expected-compact)))))))
 
-(ert-deftest pearl-paren-style-spec-convert-to-compact-removes-blank-lines ()
+(ert-deftest pearl-paren-style-convert-to-compact-removes-blank-lines-test ()
   "Compact conversion removes blank lines from deleted parenthesis lines."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -739,7 +738,7 @@
           ;; Verify exact line count after compact
           (should (= (count-lines (point-min) (point-max)) expected-lines)))))))
 
-(ert-deftest pearl-paren-style-spec-convert-to-compact-with-trailing-comment ()
+(ert-deftest pearl-paren-style-convert-to-compact-with-trailing-comment-test ()
   "Compact conversion correctly handles trailing comments (bug fix test)."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -754,7 +753,7 @@
 
 ;;;; Dangling conversion tests
 
-(ert-deftest pearl-paren-style-spec-convert-to-dangling-preserves-comment ()
+(ert-deftest pearl-paren-style-convert-to-dangling-preserves-comment-test ()
   "Dangling conversion preserves ) followed by comment."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -768,7 +767,7 @@
           (search-backward ";")
           (should (looking-at "; end comment")))))))
 
-(ert-deftest pearl-paren-style-spec-convert-to-dangling-ignores-paren-in-comment ()
+(ert-deftest pearl-paren-style-convert-to-dangling-ignores-paren-in-comment-test ()
   "Dangling conversion ignores ) in comment."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -782,7 +781,7 @@
           (search-backward ";")
           (should (looking-at "; note: function returns ')'")))))))
 
-(ert-deftest pearl-paren-style-spec-convert-to-dangling-multi-level ()
+(ert-deftest pearl-paren-style-convert-to-dangling-multi-level-test ()
   "Dangling conversion with comments on multiple closing parenthesis lines."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -795,7 +794,7 @@
                             original result expected))
           (should (string= result expected)))))))
 
-(ert-deftest pearl-paren-style-spec-convert-to-dangling-code-comment-separate ()
+(ert-deftest pearl-paren-style-convert-to-dangling-code-comment-separate-test ()
   "Dangling conversion: ) on separate line when previous line has code+comment."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -808,7 +807,7 @@
                             original result expected))
           (should (string= result expected)))))))
 
-(ert-deftest pearl-paren-style-spec-convert-to-dangling-deep-nested ()
+(ert-deftest pearl-paren-style-convert-to-dangling-deep-nested-test ()
   "Dangling conversion for deep nested parentheses with comment."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -821,7 +820,7 @@
                             original result expected))
           (should (string= result expected)))))))
 
-(ert-deftest pearl-paren-style-spec-convert-to-dangling-aligns-with-opener ()
+(ert-deftest pearl-paren-style-convert-to-dangling-aligns-with-opener-test ()
   "Dangling conversion aligns closing parenthesis with opening parenthesis."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -841,7 +840,7 @@
           (beginning-of-line)
           (should (looking-at "  )$")))))))
 
-(ert-deftest pearl-paren-style-spec-convert-to-dangling-no-extra-blank-lines ()
+(ert-deftest pearl-paren-style-convert-to-dangling-no-extra-blank-lines-test ()
   "Dangling conversion does not create extra blank lines."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -865,7 +864,7 @@
           (goto-char (point-min))
           (should-not (re-search-forward "\n\n" nil t)))))))
 
-(ert-deftest pearl-paren-style-spec-convert-to-dangling-aligns-column-zero ()
+(ert-deftest pearl-paren-style-convert-to-dangling-aligns-column-zero-test ()
   "Dangling conversion keeps column-0 closing parenthesis at column 0."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -886,7 +885,7 @@
           (should (looking-at "  )$")))))  ; Should be at column 2
     ))
 
-(ert-deftest pearl-paren-style-spec-convert-to-dangling-keeps-single-line ()
+(ert-deftest pearl-paren-style-convert-to-dangling-keeps-single-line-test ()
   "Dangling conversion keeps single-line parentheses compact."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -899,7 +898,7 @@
                             original result expected))
           (should (string= result expected)))))))
 
-(ert-deftest pearl-paren-style-spec-convert-to-dangling-converts-multi-line ()
+(ert-deftest pearl-paren-style-convert-to-dangling-converts-multi-line-test ()
   "Dangling conversion converts multi-line parentheses to dangling style."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -924,7 +923,7 @@
 
 ;;;; File processing tests
 
-(ert-deftest pearl-paren-style-spec-file-readonly-error ()
+(ert-deftest pearl-paren-style-file-readonly-error-test ()
   "File processing returns error status for read-only files."
   (let ((temp-file (make-temp-file "pearl-readonly-" nil ".el")))
     (with-temp-file temp-file
@@ -939,7 +938,7 @@
       (set-file-modes temp-file #o644)
       (delete-file temp-file))))
 
-(ert-deftest pearl-paren-style-spec-file-error-recovery ()
+(ert-deftest pearl-paren-style-file-error-recovery-test ()
   "File processing handles various error conditions."
   (let* ((temp-dir (make-temp-file "pearl-error-test-" t))
          (valid-file (expand-file-name "valid.el" temp-dir))
@@ -1005,7 +1004,7 @@
       (ignore-errors (delete-file non-el-file))
       (delete-directory temp-dir t))))
 
-(ert-deftest pearl-paren-style-spec-file-symlink-handling ()
+(ert-deftest pearl-paren-style-file-symlink-handling-test ()
   "File collection handles symbolic links."
   (let* ((temp-dir (make-temp-file "pearl-symlink-test-" t))
          (real-file (expand-file-name "real.el" temp-dir))
@@ -1063,7 +1062,7 @@
       (ignore-errors (delete-directory subdir t))
       (delete-directory temp-dir t))))
 
-(ert-deftest pearl-paren-style-spec-file-processing ()
+(ert-deftest pearl-paren-style-file-processing-test ()
   "File processing functions work with temporary files."
   (let* ((temp-dir (make-temp-file "pearl-test-" t))
          (file1 (expand-file-name "test1.el" temp-dir))
@@ -1117,7 +1116,7 @@
     ;; Cleanup
     (delete-directory temp-dir t)))
 
-(ert-deftest pearl-paren-style-spec-file-wildcard-selection ()
+(ert-deftest pearl-paren-style-file-wildcard-selection-test ()
   "Wildcard file selection outside Dired mode."
   (let ((temp-dir (make-temp-file "pearl-wildcard-test-" t))
         (temp-file1 (make-temp-file "test-" nil ".el"))
@@ -1160,7 +1159,7 @@
 
 ;;;; DWIM tests
 
-(ert-deftest pearl-paren-style-spec-dwim-region ()
+(ert-deftest pearl-paren-style-dwim-region-test ()
   "DWIM calls convert-region when region is active."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1187,7 +1186,7 @@
                                   original region-content result))
                 (should (string-match-p "  (let ((x 1))\n    (foo))" result))))))))))
 
-(ert-deftest pearl-paren-style-spec-dwim-buffer ()
+(ert-deftest pearl-paren-style-dwim-buffer-test ()
   "DWIM calls toggle when no region is active."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1207,7 +1206,7 @@
 
 ;;;; Comment handling tests
 
-(ert-deftest pearl-paren-style-spec-comment-ignores-left-paren ()
+(ert-deftest pearl-paren-style-comment-ignores-left-paren-test ()
   "Comment handling ignores ( in comments."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1226,7 +1225,7 @@
         ;; Avoid empty let body warning
         nil))))
 
-(ert-deftest pearl-paren-style-spec-comment-ignores-unbalanced-parens ()
+(ert-deftest pearl-paren-style-comment-ignores-unbalanced-parens-test ()
   "Comment handling ignores unbalanced parentheses in comments."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1245,7 +1244,7 @@
         ;; Avoid empty let body warning
         nil))))
 
-(ert-deftest pearl-paren-style-spec-comment-ignores-multiline-parens ()
+(ert-deftest pearl-paren-style-comment-ignores-multiline-parens-test ()
   "Comment handling ignores parentheses in multi-line comments."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1272,7 +1271,7 @@
         ;; Avoid empty let body warning
         nil))))
 
-(ert-deftest pearl-paren-style-spec-comment-ignores-many-left-parens ()
+(ert-deftest pearl-paren-style-comment-ignores-many-left-parens-test ()
   "Comment handling ignores many unbalanced left parentheses."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1289,7 +1288,7 @@
         (ert-info ((format "Original:\n%s\nAfter to-compact:\n%s" original result2))
           (should (string-match-p (regexp-quote "; ((((((") result2)))))))
 
-(ert-deftest pearl-paren-style-spec-comment-ignores-many-right-parens ()
+(ert-deftest pearl-paren-style-comment-ignores-many-right-parens-test ()
   "Comment handling ignores many unbalanced right parentheses."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1306,7 +1305,7 @@
         (ert-info ((format "Original:\n%s\nAfter to-compact:\n%s" original result2))
           (should (string-match-p (regexp-quote "; ))))))") result2)))))))
 
-(ert-deftest pearl-paren-style-spec-comment-ignores-mixed-parens ()
+(ert-deftest pearl-paren-style-comment-ignores-mixed-parens-test ()
   "Comment handling ignores mixed unbalanced parentheses."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1325,7 +1324,7 @@
 
 ;;;; Character literal tests
 
-(ert-deftest pearl-paren-style-spec-char-ignores-parens ()
+(ert-deftest pearl-paren-style-char-ignores-parens-test ()
   "Character literals ?\\( and ?\\) are not treated as structural parentheses."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1337,7 +1336,7 @@
           (should (string-match-p "?\\\\(" result))
           (should (string-match-p "?\\\\)" result)))))))
 
-(ert-deftest pearl-paren-style-spec-char-ignores-semicolon ()
+(ert-deftest pearl-paren-style-char-ignores-semicolon-test ()
   "Character literal ?\; is not treated as comment start."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1350,7 +1349,7 @@
           (should (string-match-p (regexp-quote "(list ?\\; ?a)") result))
           (should (string-match-p "(foo\n  (bar))" result)))))))
 
-(ert-deftest pearl-paren-style-spec-char-converts-with-semicolon ()
+(ert-deftest pearl-paren-style-char-converts-with-semicolon-test ()
   "Compact conversion works with character literal ?\; in code."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1364,7 +1363,7 @@
           (should (string-match-p "?\\\\;" result))
           (should (string= result expected)))))))
 
-(ert-deftest pearl-paren-style-spec-char-handles-backslash ()
+(ert-deftest pearl-paren-style-char-handles-backslash-test ()
   "Character literal ?\\ does not break parsing."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1375,7 +1374,7 @@
         (ert-info ((format "Original:\n%s\nResult:\n%s" original result))
           (should (string-match-p "?\\\\\\\\" result)))))))
 
-(ert-deftest pearl-paren-style-spec-char-preserves-special ()
+(ert-deftest pearl-paren-style-char-preserves-testial-test ()
   "All special character literals are preserved."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1391,7 +1390,7 @@
 
 ;;;; String handling tests
 
-(ert-deftest pearl-paren-style-spec-string-ignores-parens ()
+(ert-deftest pearl-paren-style-string-ignores-parens-test ()
   "Parentheses inside string literals do not affect conversion."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1406,7 +1405,7 @@
           (beginning-of-line)
           (should (looking-at "\\s-*)$")))))))
 
-(ert-deftest pearl-paren-style-spec-string-ignores-unbalanced-parens ()
+(ert-deftest pearl-paren-style-string-ignores-unbalanced-parens-test ()
   "String handling ignores unbalanced parentheses inside strings."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1426,7 +1425,7 @@
               (let ((string-content (buffer-substring string-start (1- (point)))))
                 (should (string-match-p "unbalanced paren" string-content))))))))))
 
-(ert-deftest pearl-paren-style-spec-string-ignores-docstring-parens ()
+(ert-deftest pearl-paren-style-string-ignores-docstring-parens-test ()
   "String handling ignores parentheses inside docstrings."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1441,7 +1440,7 @@
           (beginning-of-line)
           (should (looking-at "\\s-*)$")))))))
 
-(ert-deftest pearl-paren-style-spec-string-ignores-multiline-parens ()
+(ert-deftest pearl-paren-style-string-ignores-multiline-parens-test ()
   "String handling ignores parentheses inside multi-line strings."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1454,7 +1453,7 @@
           (should (string-match-p "with (parens)" result))
           (should (string-match-p "line3\"" result)))))))
 
-(ert-deftest pearl-paren-style-spec-string-ignores-multiline-parens-inside ()
+(ert-deftest pearl-paren-style-string-ignores-multiline-parens-inside-test ()
   "String handling ignores parentheses inside multiline strings."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1471,7 +1470,7 @@
           (beginning-of-line)
           (should (looking-at "\\s-*)$")))))))
 
-(ert-deftest pearl-paren-style-spec-string-ignores-nested-parens ()
+(ert-deftest pearl-paren-style-string-ignores-nested-parens-test ()
   "String handling ignores parentheses inside nested strings/quotes."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1488,7 +1487,7 @@
           (beginning-of-line)
           (should (looking-at "\\s-*)$")))))))
 
-(ert-deftest pearl-paren-style-spec-string-preserves-escapes ()
+(ert-deftest pearl-paren-style-string-preserves-escapes-test ()
   "String handling preserves escape sequences."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1502,7 +1501,7 @@
           (should (string-match-p "\\\\\"" result))
           (should (string-match-p "\\\\\\\\" result)))))))
 
-(ert-deftest pearl-paren-style-spec-string-preserves-escaped-quotes-and-parens ()
+(ert-deftest pearl-paren-style-string-preserves-escaped-quotes-and-parens-test ()
   "String handling preserves escaped quotes and parentheses."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1518,7 +1517,7 @@
           (should (string-match-p "\\\\(parens\\\\)" result))
           (should (string= result expected)))))))
 
-(ert-deftest pearl-paren-style-spec-string-distinguishes-from-real-paren ()
+(ert-deftest pearl-paren-style-string-distinguishes-from-real-paren-test ()
   "String handling distinguishes string ) from real closing parenthesis."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1533,7 +1532,7 @@
           ;; Single-line parens should not be converted to dangling
           (should (string= result expected)))))))
 
-(ert-deftest pearl-paren-style-spec-string-distinguishes-comments-from-strings ()
+(ert-deftest pearl-paren-style-string-distinguishes-comments-from-strings-test ()
   "String handling distinguishes comments from strings with ; and parentheses."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1552,7 +1551,7 @@
           (beginning-of-line)
           (should (looking-at "\\s-*)$")))))))
 
-(ert-deftest pearl-paren-style-spec-string-handles-backslash-continued ()
+(ert-deftest pearl-paren-style-string-handles-backslash-continued-test ()
   "String handling handles backslash-continued strings."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1567,7 +1566,7 @@
           (should (string-match-p "line2 (with paren)" result))
           (should (string= result expected-compact)))))))
 
-(ert-deftest pearl-paren-style-spec-string-handles-complex-nested ()
+(ert-deftest pearl-paren-style-string-handles-complex-nested-test ()
   "String handling handles complex nesting of strings and parentheses."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1591,7 +1590,7 @@
 
 ;;;; Annotation tests
 
-(ert-deftest pearl-paren-style-spec-annotation-basic ()
+(ert-deftest pearl-paren-style-annotation-basic-test ()
   "Basic annotation creation test."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1619,7 +1618,7 @@
             (dolist (text (mapcar (lambda (ov) (overlay-get ov 'after-string)) pearl-paren-style--annotation-overlays))
               (should (string-match-p "← [0-9]+:[0-9]+ " text)))))))))
 
-(ert-deftest pearl-paren-style-spec-annotation-already-dangling ()
+(ert-deftest pearl-paren-style-annotation-already-dangling-test ()
   "Annotation should show when file is already in dangling style."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1648,7 +1647,7 @@
               (should (pearl-paren-style--annotation-enabled-p))
               (should (> overlay-count 0)))))))))
 
-(ert-deftest pearl-paren-style-spec-annotation-toggle-to-dangling ()
+(ert-deftest pearl-paren-style-annotation-toggle-to-dangling-test ()
   "Annotation should show when toggling from compact to dangling."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1678,7 +1677,7 @@
               (should (pearl-paren-style--annotation-enabled-p))
               (should (> overlay-count 0)))))))))
 
-(ert-deftest pearl-paren-style-spec-annotation-convert-to-dangling ()
+(ert-deftest pearl-paren-style-annotation-convert-to-dangling-test ()
   "Annotation should show when converting to dangling style."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1708,7 +1707,7 @@
               (should (pearl-paren-style--annotation-enabled-p))
               (should (> overlay-count 0)))))))))
 
-(ert-deftest pearl-paren-style-spec-annotation-disabled ()
+(ert-deftest pearl-paren-style-annotation-disabled-test ()
   "Annotation disabled when `pearl-paren-style-show-annotations' is nil."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1720,7 +1719,7 @@
         (ert-info ((format "Overlay count: %d" overlay-count))
           (should (= overlay-count 0)))))))
 
-(ert-deftest pearl-paren-style-spec-annotation-removal ()
+(ert-deftest pearl-paren-style-annotation-removal-test ()
   "Test annotation removal when switching to compact."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1736,7 +1735,7 @@
             ;; Overlays should be cleared when converting to compact
             (should (= final-overlay-count 0))))))))
 
-(ert-deftest pearl-paren-style-spec-annotation-text ()
+(ert-deftest pearl-paren-style-annotation-text-test ()
   "Test annotation text generation."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1762,7 +1761,7 @@
               (should (string-match-p "← [0-9]+:[0-9]+ " text))
               (should (string-match-p "when" text)))))))))
 
-(ert-deftest pearl-paren-style-spec-annotation-no-single-line ()
+(ert-deftest pearl-paren-style-annotation-no-single-line-test ()
   "No annotation for single-line parentheses."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1773,7 +1772,7 @@
                             code result))
           (should-not result))))))
 
-(ert-deftest pearl-paren-style-spec-annotation-in-string ()
+(ert-deftest pearl-paren-style-annotation-in-string-test ()
   "No annotation for parentheses in strings."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1789,7 +1788,7 @@
 
 
 
-(ert-deftest pearl-paren-style-spec-annotation-not-selectable ()
+(ert-deftest pearl-paren-style-annotation-not-selectable-test ()
   "Annotation overlay text should not be selectable."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1811,7 +1810,7 @@
 
 ;;;; Annotation color tests
 
-(ert-deftest pearl-paren-style-spec-annotation-color-with-valid-face ()
+(ert-deftest pearl-paren-style-annotation-color-with-valid-face-test ()
   "Test annotation color calculation with valid face colors."
   ;; Skip this test in batch mode because color-name-to-rgb doesn't work
   (unless noninteractive
@@ -1835,7 +1834,7 @@
             (should (stringp color20))
             (should (stringp color30))))))))
 
-(ert-deftest pearl-paren-style-spec-annotation-color-with-unspecified-face ()
+(ert-deftest pearl-paren-style-annotation-color-with-unspecified-face-test ()
   "Test annotation color calculation throws error with unspecified face."
   ;; Skip this test in batch mode because color-name-to-rgb doesn't work
   (unless noninteractive
@@ -1863,7 +1862,7 @@
 
 ;;;; Boundary condition tests
 
-(ert-deftest pearl-paren-style-spec-boundary-empty-lines ()
+(ert-deftest pearl-paren-style-boundary-empty-lines-test ()
   "Boundary handling: empty lines between code and closing parenthesis."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1875,7 +1874,7 @@
           ;; Should not leave blank lines from deleted paren lines
           (should-not (string-match-p "\n\n" result)))))))
 
-(ert-deftest pearl-paren-style-spec-boundary-buffer-starting-with-paren ()
+(ert-deftest pearl-paren-style-boundary-buffer-starting-with-paren-test ()
   "Boundary handling: buffer starting with closing parenthesis."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1887,7 +1886,7 @@
           (should t)  ; Just ensure no crash
           )))))
 
-(ert-deftest pearl-paren-style-spec-boundary-whitespace-variations ()
+(ert-deftest pearl-paren-style-boundary-whitespace-variations-test ()
   "Boundary handling: various whitespace characters and combinations."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1918,7 +1917,7 @@
                 (expected-trimmed (replace-regexp-in-string "\n\\'" "" expected-dangling)))
             (should (string= result-trimmed expected-trimmed))))))))
 
-(ert-deftest pearl-paren-style-spec-boundary-buffer-boundaries ()
+(ert-deftest pearl-paren-style-boundary-buffer-boundaries-test ()
   "Boundary handling: edge cases at buffer boundaries."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -1944,7 +1943,7 @@
 
 ;;;; Performance tests
 
-(ert-deftest pearl-paren-style-spec-perf-nesting ()
+(ert-deftest pearl-paren-style-perf-nesting-test ()
   "Performance test: deep nesting conversion."
   ;; Depth 200 test
   (with-temp-buffer
@@ -1982,7 +1981,7 @@
                               depth elapsed))
             (should (<= elapsed 1.0))))))))
 
-(ert-deftest pearl-paren-style-spec-perf-deep-nesting ()
+(ert-deftest pearl-paren-style-perf-deep-nesting-test ()
   "Performance test: deep nesting completes in reasonable time."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -2002,7 +2001,7 @@
                               depth buffer-lines elapsed))
             (should (<= elapsed 1.0))))))))
 
-(ert-deftest pearl-paren-style-spec-perf-deep-nested-indent ()
+(ert-deftest pearl-paren-style-perf-deep-nested-indent-test ()
   "Performance test: deep nested dangling aligns with opener."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -2020,7 +2019,7 @@
           (beginning-of-line)
           (should (looking-at ")$")))))))
 
-(ert-deftest pearl-paren-style-spec-perf-deep-nesting-with-comments ()
+(ert-deftest pearl-paren-style-perf-deep-nesting-with-comments-test ()
   "Performance test: deep nesting with comments at each level."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -2042,7 +2041,7 @@
 
 ;;;; Annotation-comment conversion tests
 
-(ert-deftest pearl-paren-style-spec-annotation-to-comment-basic ()
+(ert-deftest pearl-paren-style-annotation-to-comment-basic-test ()
   "Basic annotation to comment conversion."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -2073,7 +2072,7 @@
             ;; Verify comment format
             (should (string-match-p ")  ;; ← " result))))))))
 
-(ert-deftest pearl-paren-style-spec-comment-to-annotation-basic ()
+(ert-deftest pearl-paren-style-comment-to-annotation-basic-test ()
   "Basic comment to annotation conversion."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -2102,7 +2101,7 @@
                 ;; Verify no extra spaces
                 (should (string-match-p ")\n)" result))))))))))
 
-(ert-deftest pearl-paren-style-spec-annotation-roundtrip ()
+(ert-deftest pearl-paren-style-annotation-roundtrip-test ()
   "Roundtrip: annotation → comment → annotation."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -2137,7 +2136,7 @@
                                   final-result (string= final-result after-comment)))
                 (should (string= final-result after-comment))))))))))
 
-(ert-deftest pearl-paren-style-spec-comment-roundtrip ()
+(ert-deftest pearl-paren-style-comment-roundtrip-test ()
   "Roundtrip: comment → annotation → comment."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -2172,7 +2171,7 @@
                 ;; Verify original comment content restored
                 (should (string= final-result original-comment)))))))))))
 
-(ert-deftest pearl-paren-style-spec-annotation-idempotent ()
+(ert-deftest pearl-paren-style-annotation-idempotent-test ()
   "Multiple annotation-to-comment calls are idempotent."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -2201,7 +2200,7 @@
                                   final-result (string= final-result first-result)))
                 (should (string= final-result first-result))))))))))
 
-(ert-deftest pearl-paren-style-spec-comment-idempotent ()
+(ert-deftest pearl-paren-style-comment-idempotent-test ()
   "Multiple comment-to-annotation calls are idempotent."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -2229,7 +2228,7 @@
                                   overlay-count-after (= overlay-count-after overlay-count)))
                 (should (= overlay-count-after overlay-count))))))))))
 
-(ert-deftest pearl-paren-style-spec-no-annotation-residue ()
+(ert-deftest pearl-paren-style-no-annotation-residue-test ()
   "No annotation overlays remain after conversion to comments."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -2241,7 +2240,7 @@
       (pearl-paren-style-annotations-to-comments)
       (should (null pearl-paren-style--annotation-overlays)))))
 
-(ert-deftest pearl-paren-style-spec-no-comment-residue ()
+(ert-deftest pearl-paren-style-no-comment-residue-test ()
   "No comment text remains after conversion to annotations."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -2261,7 +2260,7 @@
         ;; Should have the original comment text
         (should (string= (buffer-string) comment-text))))))
 
-(ert-deftest pearl-paren-style-spec-mixed-comments-handling ()
+(ert-deftest pearl-paren-style-mixed-comments-handling-test ()
   "Handle existing comments mixed with annotations."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -2288,7 +2287,7 @@
             (should (string-match-p "; regular comment" after-to-comment))
             (should (string-match-p ";; ← " after-to-comment))))))))
 
-(ert-deftest pearl-paren-style-spec-conversion-empty-buffer ()
+(ert-deftest pearl-paren-style-conversion-empty-buffer-test ()
   "Handle empty buffer in conversion functions."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -2298,7 +2297,7 @@
         (should-error (pearl-paren-style-annotations-to-comments) :type 'user-error)
         (should-error (pearl-paren-style-comments-to-annotations) :type 'user-error)))))
 
-(ert-deftest pearl-paren-style-spec-conversion-compact-style ()
+(ert-deftest pearl-paren-style-conversion-compact-style-test ()
   "Handle compact style buffer in conversion functions."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -2313,7 +2312,7 @@
             ;; Should error because no annotation comments
             (should-error (pearl-paren-style-comments-to-annotations) :type 'user-error)))))))
 
-(ert-deftest pearl-paren-style-spec-preserve-user-comment-during-conversion ()
+(ert-deftest pearl-paren-style-preserve-user-comment-during-conversion-test ()
   "Test that user comments are not lost during annotation-comment roundtrips."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -2339,7 +2338,7 @@
       ;; Avoid empty let body warning
       nil)))
 
-(ert-deftest pearl-paren-style-spec-annotation-comment-with-trailing-user-comment ()
+(ert-deftest pearl-paren-style-annotation-comment-with-trailing-user-comment-test ()
   "Annotation-to-comment preserves original trailing comment with correct spacing."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -2370,7 +2369,7 @@
               (when text
                 (should-not (string-match-p "user comment" text))))))))))
 
-(ert-deftest pearl-paren-style-spec-annotation-text-no-trailing-space ()
+(ert-deftest pearl-paren-style-annotation-text-no-trailing-space-test ()
   "Annotation text from truncated open-text should not have trailing spaces in comment."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -2390,7 +2389,7 @@
         ;; Avoid unused variable warning
         (should (stringp result))))))
 
-(ert-deftest pearl-paren-style-spec-annotation-no-accumulation ()
+(ert-deftest pearl-paren-style-annotation-no-accumulation-test ()
   "Annotations do not accumulate across multiple toggle cycles."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -2413,7 +2412,7 @@
               (should (= count1 count2))
               (should (= count2 count3)))))))))
 
-(ert-deftest pearl-paren-style-spec-annotation-clear-on-revert ()
+(ert-deftest pearl-paren-style-annotation-clear-on-revert-test ()
   "Annotations are cleared after buffer revert (overlays collapse to point-min)."
   (with-temp-buffer
     (emacs-lisp-mode)
@@ -2439,7 +2438,7 @@
         (ert-info ((format "Remaining annotation overlays after revert: %d" remaining))
           (should (= remaining 0)))))))
 
-(ert-deftest pearl-paren-style-spec-annotation-min-distance ()
+(ert-deftest pearl-paren-style-annotation-min-distance-test ()
   "Annotations are suppressed for closing parens closer than min distance."
   ;; distance < threshold: should not show
   (with-temp-buffer
@@ -2464,5 +2463,5 @@
                           (length pearl-paren-style--annotation-overlays)))
         (should (= (length pearl-paren-style--annotation-overlays) 1))))))
 
-(provide 'pearl-paren-style-spec)
-;;; pearl-paren-style-spec.el ends here
+(provide 'pearl-paren-style-test)
+;;; pearl-paren-style-test.el ends here

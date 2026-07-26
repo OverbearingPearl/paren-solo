@@ -56,7 +56,7 @@ jobs:
           {
             echo "=== Building release package ==="
             mkdir -p dist/pearl-paren-style
-            cp pearl-paren-style.el pearl-paren-style-spec.el README.md LICENSE dist/pearl-paren-style/
+            cp pearl-paren-style.el pearl-paren-style-test.el README.md LICENSE dist/pearl-paren-style/
             cd dist
             zip -r ../pearl-paren-style-${{ github.ref_name }}.zip pearl-paren-style/
           } 2>&1 | tee -a build-logs.txt
