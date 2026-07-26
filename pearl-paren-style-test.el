@@ -1,10 +1,5 @@
 ;;; pearl-paren-style-test.el --- Tests for pearl-paren-style  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2026 OverbearingPearl
-;; Author: OverbearingPearl <OverbearingPearl@outlook.com>
-;; URL: https://github.com/OverbearingPearl/pearl-paren-style
-;; SPDX-License-Identifier: GPL-3.0-or-later
-
 ;;; Commentary:
 
 ;; ERT tests for pearl-paren-style.el
