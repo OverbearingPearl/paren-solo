@@ -830,7 +830,7 @@ This creates permanent comments that can be read by AI tools
 outside of Emacs sessions."
   (interactive)
   (unless pearl-paren-style-show-annotations
-    (user-error "Annotations are disabled. Enable with `pearl-paren-style-show-annotations'"))
+    (user-error "Annotations are disabled.  Enable with `pearl-paren-style-show-annotations'"))
   (cond
    ((> (length pearl-paren-style--annotation-overlays) 0)
     (let ((positions (sort (mapcar #'overlay-start pearl-paren-style--annotation-overlays) #'>)))
@@ -851,7 +851,7 @@ outside of Emacs sessions."
 This restores interactive annotations from permanent comments."
   (interactive)
   (unless pearl-paren-style-show-annotations
-    (user-error "Annotations are disabled. Enable with `pearl-paren-style-show-annotations'"))
+    (user-error "Annotations are disabled.  Enable with `pearl-paren-style-show-annotations'"))
   (let ((comment-pairs (pearl-paren-style--find-annotation-comments)))
     (when (null comment-pairs)
       (user-error "No annotation comments found"))
@@ -902,7 +902,7 @@ This restores interactive annotations from permanent comments."
 
 ;;;###autoload
 (defun pearl-paren-style-run-tests ()
-  "Run all tests for pearl-paren-style."
+  "Run all test for pearl-paren-style."
   (interactive)
   (require 'ert)
   (ert-delete-all-tests)
