@@ -74,8 +74,8 @@
 ;;; Code:
 
 ;; Silence byte-compiler warnings about dired and ert functions
-(declare-function dired-get-marked-files "dired")
-(declare-function ert-delete-all-tests "ert")
+(require 'dired)
+(require 'ert)
 
 (require 'cl-lib)
 (require 'color)
