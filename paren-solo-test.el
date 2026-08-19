@@ -1781,8 +1781,6 @@
                             code paren-pos result))
           (should-not result))))))
 
-
-
 (ert-deftest paren-solo-annotation-not-selectable-test ()
   "Annotation overlay text should not be selectable."
   (with-temp-buffer

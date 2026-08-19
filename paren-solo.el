@@ -334,7 +334,6 @@ Returns the overlay or nil if no annotation needed."
   "Clear stale annotation overlays after buffer revert."
   (paren-solo--clear-annotations))
 
-
 (defun paren-solo--update-annotations-full ()
   "Create annotations for all closing parentheses in buffer."
   (paren-solo--clear-annotations)
