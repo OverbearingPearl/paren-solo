@@ -4,7 +4,7 @@
 ;; Author: OverbearingPearl <OverbearingPearl@outlook.com>
 ;; Assisted-by: Kimi:kimi-k2.5, DeepSeek:deepseek-v3.2, Claude:claude-sonnet-4.6
 ;; URL: https://github.com/OverbearingPearl/paren-solo
-;; Version: 0.1.0
+;; Version: 0.1.1
 ;; Package-Requires: ((emacs "25.1"))
 ;; Keywords: lisp, tools, convenience, parentheses, formatting
 ;; SPDX-License-Identifier: GPL-3.0-or-later
