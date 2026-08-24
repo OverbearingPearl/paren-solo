@@ -2476,4 +2476,27 @@
         (should (= (length paren-solo--annotation-overlays) 1))))))
 
 (provide 'paren-solo-test)
+
+;;;###autoload
+(defun paren-solo-test-run ()
+  "Run every paren-solo test.
+This is the batch test entry point.  Loading this file and calling
+this function will run the full test suite."
+  (interactive)
+  (require 'ert)
+  (ert-delete-all-tests)
+  (let* ((this-file (symbol-file 'paren-solo-test-run))
+         (dir (file-name-directory this-file)))
+    ;; Unload old code
+    (when (featurep 'paren-solo)
+      (unload-feature 'paren-solo t))
+    ;; Reload source files (force load .el, ignore .elc)
+    (load (expand-file-name "paren-solo" dir) nil t)
+    ;; Load test files
+    (load (expand-file-name "paren-solo-test" dir) nil t))
+  ;; Use batch-compatible function to ensure output is visible in terminal
+  (if noninteractive
+      (ert-run-tests-batch-and-exit)
+    (ert t)))
+
 ;;; paren-solo-test.el ends here

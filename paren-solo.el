@@ -73,9 +73,8 @@
 
 ;;; Code:
 
-;; Silence byte-compiler warnings about dired and ert functions
+;; Silence byte-compiler warnings about dired functions
 (require 'dired)
-(require 'ert)
 
 (require 'cl-lib)
 (require 'color)
@@ -898,27 +897,6 @@ This restores interactive annotations from permanent comments."
                                   (unless (string-prefix-p paren-solo--annotation-comment-prefix trimmed)
                                     (insert "  " trimmed))))))))))))))))
       (message "Converted %d comment(s) to annotations" converted))))
-
-;;;###autoload
-(defun paren-solo-run-tests ()
-  "Run all test for paren-solo."
-  (interactive)
-  (require 'ert)
-  (ert-delete-all-tests)
-  (let* ((this-file (symbol-file 'paren-solo-run-tests))
-         (dir (file-name-directory this-file)))
-    ;; Unload old code
-    (when (featurep 'paren-solo)
-      (unload-feature 'paren-solo t))
-    ;; Reload source files (force load .el, ignore .elc)
-    (load (expand-file-name "paren-solo" dir) nil t)
-    ;; Load test files
-    (load (expand-file-name "paren-solo-test" dir) nil t))
-
-  ;; Use batch-compatible function to ensure output is visible in terminal
-  (if noninteractive
-      (ert-run-tests-batch-and-exit)
-    (ert t)))
 
 ;;;###autoload
 (defun paren-solo-dwim ()
