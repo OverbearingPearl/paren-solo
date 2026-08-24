@@ -9,6 +9,25 @@
 (require 'ert)
 (require 'paren-solo)
 
+(defun paren-solo-test--safe-cleanup (path)
+  "Delete PATH (file, symlink or directory) ignoring errors."
+  (when path
+    (condition-case nil
+        (cond ((file-symlink-p path)
+               (delete-file path))
+              ((file-directory-p path)
+               (delete-directory path t))
+              (t
+               (delete-file path)))
+      (error nil))))
+
+(defun paren-solo-test--safe-set-file-modes (file mode)
+  "Set FILE MODE ignoring errors."
+  (when file
+    (condition-case nil
+        (set-file-modes file mode)
+      (error nil))))
+
 ;;;; Detection tests
 
 (ert-deftest paren-solo-detect-compact-test ()
@@ -992,11 +1011,11 @@
                   (should (= processed-count 1))  ; Only valid file processed
                   )))))
       ;; Cleanup - restore permissions before deletion
-      (ignore-errors (set-file-modes readonly-file #o644))
-      (ignore-errors (delete-file valid-file))
-      (ignore-errors (delete-file unbalanced-file))
-      (ignore-errors (delete-file readonly-file))
-      (ignore-errors (delete-file non-el-file))
+      (paren-solo-test--safe-set-file-modes readonly-file #o644)
+      (paren-solo-test--safe-cleanup valid-file)
+      (paren-solo-test--safe-cleanup unbalanced-file)
+      (paren-solo-test--safe-cleanup readonly-file)
+      (paren-solo-test--safe-cleanup non-el-file)
       (delete-directory temp-dir t))))
 
 (ert-deftest paren-solo-file-symlink-handling-test ()
@@ -1050,11 +1069,11 @@
               ;; So it returns the symlink path, not the original path
               (should (member (expand-file-name "nested.el" link-to-dir) files)))))
       ;; Cleanup
-      (ignore-errors (delete-file link-file))
-      (ignore-errors (delete-file link-to-dir))
-      (ignore-errors (delete-file real-file))
-      (ignore-errors (delete-file nested-file))
-      (ignore-errors (delete-directory subdir t))
+      (paren-solo-test--safe-cleanup link-file)
+      (paren-solo-test--safe-cleanup link-to-dir)
+      (paren-solo-test--safe-cleanup real-file)
+      (paren-solo-test--safe-cleanup nested-file)
+      (paren-solo-test--safe-cleanup subdir)
       (delete-directory temp-dir t))))
 
 (ert-deftest paren-solo-file-processing-test ()
