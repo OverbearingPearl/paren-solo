@@ -2496,7 +2496,7 @@ this function will run the full test suite."
     (load (expand-file-name "paren-solo-test" dir) nil t))
   ;; Use batch-compatible function to ensure output is visible in terminal
   (if noninteractive
-      (ert-run-tests-batch-and-exit)
-    (ert t)))
+      (ert-run-tests-batch-and-exit "paren-solo-")
+    (ert "paren-solo-")))
 
 ;;; paren-solo-test.el ends here
