@@ -6,7 +6,7 @@
 ;; URL: https://github.com/OverbearingPearl/paren-solo
 ;; Version: 0.1.3
 ;; Package-Requires: ((emacs "25.1"))
-;; Keywords: lisp, tools, convenience, parentheses, formatting
+;; Keywords: lisp, tools, convenience
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
