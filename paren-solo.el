@@ -917,4 +917,5 @@ This restores interactive annotations from permanent comments."
     (paren-solo-toggle))))
 
 (provide 'paren-solo)
+
 ;;; paren-solo.el ends here
