@@ -2485,18 +2485,25 @@ this function will run the full test suite."
   (interactive)
   (require 'ert)
   (ert-delete-all-tests)
-  (let* ((this-file (symbol-file 'paren-solo-test-run))
-         (dir (file-name-directory this-file)))
-    ;; Unload old code
-    (when (featurep 'paren-solo)
-      (unload-feature 'paren-solo t))
-    ;; Reload source files (force load .el, ignore .elc)
-    (load (expand-file-name "paren-solo" dir) nil t)
-    ;; Load test files
-    (load (expand-file-name "paren-solo-test" dir) nil t))
-  ;; Use batch-compatible function to ensure output is visible in terminal
-  (if noninteractive
-      (ert-run-tests-batch-and-exit "paren-solo-")
-    (ert "paren-solo-")))
+  (let ((invoking-directory default-directory))
+    (let* ((this-file (symbol-file 'paren-solo-test-run))
+           (dir (file-name-directory this-file)))
+      ;; Unload old code
+      (when (featurep 'paren-solo)
+        (unload-feature 'paren-solo t))
+      ;; Reload source files (force load .el, ignore .elc)
+      (load (expand-file-name "paren-solo" dir) nil t)
+      ;; Load test files
+      (load (expand-file-name "paren-solo-test" dir) nil t))
+    (let ((default-directory invoking-directory))
+      ;; Use batch-compatible function to ensure output is visible in terminal
+      (if noninteractive
+          (ert-run-tests-batch-and-exit "paren-solo-")
+        ;; ERT's results buffer name is hard-coded as "*ert*".
+        ;; Discard any stale buffer so it is recreated with the invoking
+        ;; directory as its `default-directory'.
+        (when (get-buffer "*ert*")
+          (kill-buffer "*ert*"))
+        (ert "paren-solo-")))))
 
 ;;; paren-solo-test.el ends here
