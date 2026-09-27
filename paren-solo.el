@@ -16,7 +16,9 @@
 ;;
 ;; The dangling style may help AI-assisted editing tools (Aider,
 ;; Copilot, etc.) by isolating each closing delimiter on its own line.
-;; This is an experimental hypothesis — see README.md for details.
+;; This is an experimental hypothesis — see
+;; https://github.com/OverbearingPearl/paren-solo/README.md for
+;; details.
 ;;
 ;; Features:
 ;;
@@ -29,7 +31,6 @@
 ;; - Validates parenthesis balance before conversion
 ;; - Convert annotations to permanent comments for AI tool compatibility
 ;; - Restore annotations from comments
-;; - Comprehensive test suite
 ;; - Context-aware DWIM (Do What I Mean) command
 ;;
 ;; Core Commands:
@@ -54,10 +55,12 @@
 ;; - paren-solo-comments-to-annotations: Restore overlays from comments
 ;;
 ;; Smart Operations:
-;; - paren-solo-dwim: Context-aware conversion (region/files/buffer)
-;;
-;; Testing:
-;; - paren-solo-run-tests: Run the full test suite
+;; - paren-solo-dwim: Dispatches on context -- with an active region it
+;;   runs `paren-solo-convert-region' (interactive style choice), with
+;;   marked files/directories in Dired it runs
+;;   `paren-solo-convert-files', otherwise it toggles the whole buffer
+;;   via `paren-solo-toggle' (auto-detects the current style and
+;;   flips it).
 ;;
 ;; Suggested workflow for AI coding:
 ;; 1. M-x paren-solo-dangling
@@ -68,8 +71,6 @@
 ;;      lines from their opener are annotated (default 5), reducing token cost
 ;; 3. Generate/modify code with AI tools
 ;; 4. M-x paren-solo-compact before committing
-;;
-;; For detailed examples and configuration, see README.md.
 
 ;;; Code:
 
